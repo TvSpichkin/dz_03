@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "dz-02",
+  "name": "dz-03",
   "builds": [
     {
       "src": "src/index.ts",
