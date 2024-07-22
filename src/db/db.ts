@@ -1,3 +1,5 @@
+import {MongoClient} from "mongodb";
+import {SET} from "../settings";
 import {BlogDbType} from "./blogsDbTypes";
 import {PostDbType} from "./postsDbTypes";
 
@@ -29,12 +31,24 @@ export const db: DBType = {
     }] // Тестовое заполнение записей
 }; // Создаём базу данных (пока это просто JS-структура)
 
-export function setDB(dataset?: DBType) {
+export const client = new MongoClient(SET.MongoURI);
+
+export async function runDB() {
+    try {
+        await client.connect(); // Подключение данного сервера к базе данных
+        console.log("Успешно подключено к монгоБД");
+    } catch(e) {
+        console.log("Не удалось подключиться к монгоБД: " + e);
+        await client.close(); // Завершение подключения к БД
+    }
+} // Запуск базы данных
+
+export async function setDB(dataset?: DBType) {
     if(!dataset) { // Если в функцию ничего не передано - то очищаем базу данных
         db.blogs = []; // Отчистка массива сетевых журналов
         db.posts = []; // Отчистка массива записей
     } else { // Если что-то передано - то заменяем старые значения новыми
-        db.blogs = dataset.blogs.map(b => ({...b}));
-        db.posts = dataset.posts.map(p => ({...p}));
+        db.blogs = dataset.blogs.map(b => ({...b})); // Перезапись массива сетевых журналов
+        db.posts = dataset.posts.map(p => ({...p})); // Перезапись массива записей
     }
 } // Функция перезаписи БД

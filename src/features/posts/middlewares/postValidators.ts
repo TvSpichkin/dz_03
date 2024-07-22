@@ -6,8 +6,8 @@ import {adminMiddleware} from "../../../globalMiddlewares/adminMiddleware";
 import {inputCheckErrorsMiddleware} from "../../../globalMiddlewares/inputCheckErrorsMiddleware";
 
 
-function checkExistBlog(blogId: string) {
-    const findBlog = blogsRep.find(blogId); // Поиск сетевого журнала
+async function checkExistBlog(blogId: string) {
+    const findBlog = await blogsRep.find(blogId); // Поиск сетевого журнала
 
     return !!findBlog; // Возврат логического значения
 } // Проверка существования заданного сетевого журнала
@@ -21,8 +21,8 @@ const titleValidator = body("title").isString().withMessage('Название н
     blogIdValidator = body("blogId").isString().withMessage('Идентификатор сетевого журнала не является строкой')
         .trim().custom(checkExistBlog).withMessage('Сетевого журнала, с введённым идентификатором, не существует'); // Проверка правильности входящего идентификатора сетевого журнала
 
-export function findPostValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
-    const findPost = postsRep.find(req.params.id); // Поиск записи
+export async function findPostValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
+    const findPost = await postsRep.find(req.params.id); // Поиск записи
     if(!findPost) res.sendStatus(404); // Если не найдено, то возрат 404 статуса
     else next(); // Передача управления дальше
 } // Проверка существования искомой записи

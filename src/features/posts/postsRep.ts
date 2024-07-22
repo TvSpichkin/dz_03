@@ -5,17 +5,17 @@ import {blogsRep} from "../blogs/blogsRep";
 
 
 export const postsRep = {
-    getAll() {
-        return db.posts.map(this.maper);
+    async getAll(): Promise<PostViewModel[]> {
+        return Promise.all(db.posts.map(this.maper));
     }, // Извлечение всех записей
-    find(id: string) {
+    async find(id: string): Promise<PostDbType | undefined> {
         return db.posts.find(p => String(p.id) === id);
     }, // Извлечение записи по идентификатору
-    findAndMap(id: string) {
-        const post = this.find(id)!; //! Этот метод используется после проверки существования
+    async findAndMap(id: string): Promise<PostViewModel> {
+        const post = (await this.find(id))!; //! Этот метод используется после проверки существования
         return this.maper(post);
     }, // Извлечение и конвертация записи
-    create(post: PostInputModel) {
+    async create(post: PostInputModel): Promise<PostViewModel> {
         const newPost: PostDbType = {
             id: db.posts.length ? db.posts[db.posts.length - 1].id + 1 : 1,
             title: post.title,
@@ -28,25 +28,25 @@ export const postsRep = {
 
         return this.maper(newPost);
     }, // Запись записи в БД
-    del(id: string) {
+    async del(id: string) {
         db.posts = db.posts.filter(p => p.id !== +id);
     }, // Удаление записи в БД
-    put(post: PostInputModel, id: string) {
-        const findPost: PostDbType = this.find(id)!; //! Этот метод используется после проверки существования
+    async put(post: PostInputModel, id: string) {
+        const findPost: PostDbType = (await this.find(id))!; //! Этот метод используется после проверки существования
 
         findPost.title = post.title;
         findPost.shortDescription = post.shortDescription;
         findPost.content = post.content;
         findPost.blogId = +post.blogId;
     }, // Изменение записи в БД
-    maper(post: PostDbType) {
+    async maper(post: PostDbType): Promise<PostViewModel> {
         const postForOutput: PostViewModel = {
             id: String(post.id),
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: String(post.blogId),
-            blogName: blogsRep.find(String(post.blogId))!.name //! Этот метод используется после проверки существования
+            blogName: (await blogsRep.find(String(post.blogId)))!.name //! Этот метод используется после проверки существования
         };
 
         return postForOutput;

@@ -3,6 +3,6 @@ import {PostViewModel} from "../../../IOtypes/postsTypes";
 import {postsRep} from "../postsRep";
 
 
-export function getPostsController(req: Request, res: Response<PostViewModel[]>) {
-    res.json(postsRep.getAll()); // Получение записей
+export async function getPostsController(req: Request, res: Response<PostViewModel[]>) {
+    res.json(await postsRep.getAll()); // Получение записей
 }; // Контролёр, отвечающий за выдачу записей

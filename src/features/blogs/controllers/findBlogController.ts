@@ -4,6 +4,6 @@ import {ReqParam} from "../../../IOtypes/reqTypes";
 import {blogsRep} from "../blogsRep";
 
 
-export function findBlogController(req: ReqParam<BlogIdModel>, res: Response<BlogViewModel>) {
-    res.json(blogsRep.findAndMap(req.params.id)); // Получение искомого сетевого журнала
+export async function findBlogController(req: ReqParam<BlogIdModel>, res: Response<BlogViewModel>) {
+    res.json(await blogsRep.findAndMap(req.params.id)); // Получение искомого сетевого журнала
 }; // Контролёр, отвечающий за выдачу искомого сетевого журнала

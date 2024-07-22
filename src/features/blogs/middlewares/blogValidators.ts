@@ -13,8 +13,8 @@ const nameValidator = body("name").isString().withMessage('Имя не явля�
         .trim().isLength({min: 1, max: 100}).withMessage('ЕУР сетевого узла содержит больше 100 символов или является пустым')
         .isURL({protocols: ["https"], allow_underscores: true}).withMessage('Строка не является единым указателем ресурсов'); // Проверка правильности входящего ЕУР сетевого узла
 
-export function findBlogValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
-    const findBlog = blogsRep.find(req.params.id); // Поиск сетевого журнала
+export async function findBlogValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
+    const findBlog = await blogsRep.find(req.params.id); // Поиск сетевого журнала
     if(!findBlog) res.sendStatus(404); // Если не найдено, то возрат 404 статуса
     else next(); // Передача управления дальше
 } // Проверка существования искомого сетевого журнала

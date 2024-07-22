@@ -4,6 +4,6 @@ import {ReqParam} from "../../../IOtypes/reqTypes";
 import {postsRep} from "../postsRep";
 
 
-export function findPostController(req: ReqParam<PostIdModel>, res: Response<PostViewModel>) {
-    res.json(postsRep.findAndMap(req.params.id)); // Получение искомого записи
+export async function findPostController(req: ReqParam<PostIdModel>, res: Response<PostViewModel>) {
+    res.json(await postsRep.findAndMap(req.params.id)); // Получение искомого записи
 }; // Контролёр, отвечающий за выдачу искомого записи
