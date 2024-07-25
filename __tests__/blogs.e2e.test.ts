@@ -1,5 +1,5 @@
 import {req, getBlog} from "./helpers/test-helpers";
-import {setDB} from "../src/db/db";
+import {setDB} from "../src/db/repDB";
 import {SET} from "../src/settings";
 import {auth, bigStr, corrBlog1, corrBlog2, corrBlog3} from "./helpers/datasets";
 import {BlogViewModel} from "../src/IOtypes/blogsTypes";
@@ -9,7 +9,7 @@ describe("/blogs", () => {
     var blog1: BlogViewModel, blog2: BlogViewModel;
     
     beforeAll(async () => {
-        setDB(); // Очистка базы данных перед началом тестирования
+        await setDB(); // Очистка базы данных перед началом тестирования
     });
     
     it("должен вернуть 200 и пустой массив", async () => {

@@ -1,15 +1,19 @@
-import {PostDbType} from "../../db/postsDbTypes";
-import {db} from "../../db/db";
+import {PostDbPutType, PostDbType} from "../../db/postsDbTypes";
+import {repBD} from "../../db/repDB";
 import {PostInputModel, PostViewModel} from "../../IOtypes/postsTypes";
-import {blogsRep} from "../blogs/blogsRep";
 
+const entKey = "posts";
 
 export const postsRep = {
     async getAll(): Promise<PostViewModel[]> {
-        return Promise.all(db.posts.map(this.maper));
+        // @ts-ignore: что-то с несоответствием типов
+        const posts: PostDbType[] = await repBD.readAll(entKey);
+
+        return Promise.all(posts.map(this.maper));
     }, // Извлечение всех записей
     async find(id: string): Promise<PostDbType | undefined> {
-        return db.posts.find(p => String(p.id) === id);
+        // @ts-ignore: что-то с несоответствием типов
+        return repBD.read(entKey, +id);
     }, // Извлечение записи по идентификатору
     async findAndMap(id: string): Promise<PostViewModel> {
         const post = (await this.find(id))!; //! Этот метод используется после проверки существования
@@ -17,27 +21,28 @@ export const postsRep = {
     }, // Извлечение и конвертация записи
     async create(post: PostInputModel): Promise<PostViewModel> {
         const newPost: PostDbType = {
-            id: db.posts.length ? db.posts[db.posts.length - 1].id + 1 : 1,
+            id: 0,
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: +post.blogId
         };
 
-        db.posts.push(newPost);
+        newPost.id = await repBD.write(entKey, newPost);
 
         return this.maper(newPost);
     }, // Запись записи в БД
     async del(id: string) {
-        db.posts = db.posts.filter(p => p.id !== +id);
+        await repBD.remove(entKey, "id", +id);
     }, // Удаление записи в БД
     async put(post: PostInputModel, id: string) {
-        const findPost: PostDbType = (await this.find(id))!; //! Этот метод используется после проверки существования
-
-        findPost.title = post.title;
-        findPost.shortDescription = post.shortDescription;
-        findPost.content = post.content;
-        findPost.blogId = +post.blogId;
+        const putPost: PostDbPutType = {
+            title: post.title,
+            shortDescription: post.shortDescription,
+            content: post.content,
+            blogId: +post.blogId
+        };
+        await repBD.edit(entKey, putPost, +id);
     }, // Изменение записи в БД
     async maper(post: PostDbType): Promise<PostViewModel> {
         const postForOutput: PostViewModel = {
@@ -46,7 +51,8 @@ export const postsRep = {
             shortDescription: post.shortDescription,
             content: post.content,
             blogId: String(post.blogId),
-            blogName: (await blogsRep.find(String(post.blogId)))!.name //! Этот метод используется после проверки существования
+            // @ts-ignore: что-то с несоответствием типов
+            blogName: (await repBD.read("blogs", post.blogId))!.name //! Этот метод используется после проверки существования
         };
 
         return postForOutput;

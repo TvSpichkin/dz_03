@@ -9,7 +9,7 @@ import {inputCheckErrorsMiddleware} from "../../../globalMiddlewares/inputCheckE
 async function checkExistBlog(blogId: string) {
     const findBlog = await blogsRep.find(blogId); // Поиск сетевого журнала
 
-    return !!findBlog; // Возврат логического значения
+    if(!findBlog) return Promise.reject(); // Возврат обещания
 } // Проверка существования заданного сетевого журнала
 
 const titleValidator = body("title").isString().withMessage('Название не является строкой')

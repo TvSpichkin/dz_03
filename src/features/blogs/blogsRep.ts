@@ -1,14 +1,20 @@
-import {BlogDbType} from "../../db/blogsDbTypes";
-import {db} from "../../db/db";
+import {BlogDbType, BlogDbPutType} from "../../db/blogsDbTypes";
+import {repBD} from "../../db/repDB";
 import {BlogInputModel, BlogViewModel} from "../../IOtypes/blogsTypes";
 
 
+const entKey = "blogs";
+
 export const blogsRep = {
     async getAll(): Promise<BlogViewModel[]> {
-        return Promise.all(db.blogs.map(this.maper));
+        // @ts-ignore: что-то с несоответствием типов
+        const blogs: BlogDbType[] = await repBD.readAll(entKey);
+
+        return Promise.all(blogs.map(this.maper));
     }, // Извлечение всех сетевых журналов
     async find(id: string): Promise<BlogDbType | undefined> {
-        return db.blogs.find(b => String(b.id) === id);
+        // @ts-ignore: что-то с несоответствием типов
+        return repBD.read(entKey, +id);
     }, // Извлечение сетевого журнала по идентификатору
     async findAndMap(id: string): Promise<BlogViewModel> {
         const blog: BlogDbType = (await this.find(id))!; //! Этот метод используется после проверки существования
@@ -16,26 +22,27 @@ export const blogsRep = {
     }, // Извлечение и конвертация сетевого журнала
     async create(blog: BlogInputModel): Promise<BlogViewModel> {
         const newBlog: BlogDbType = {
-            id: db.blogs.length ? db.blogs[db.blogs.length - 1].id + 1 : 1,
+            id: 0,
             name: blog.name,
             description: blog.description,
             websiteUrl: blog.websiteUrl
         };
 
-        db.blogs.push(newBlog);
+        newBlog.id = await repBD.write(entKey, newBlog);
 
         return this.maper(newBlog);
     }, // Запись сетевого журнала в БД
     async del(id: string) {
-        db.blogs = db.blogs.filter(b => b.id !== +id);
-        db.posts = db.posts.filter(p => p.blogId !== +id);
+        await repBD.remove(entKey, "id", +id);
+        await repBD.remove("posts", "blogId", +id);
     }, // Удаление сетевого журнала и всех его записей в БД
     async put(blog: BlogInputModel, id: string) {
-        const findBlog: BlogDbType = (await this.find(id))!; //! Этот метод используется после проверки существования
-
-        findBlog.name = blog.name;
-        findBlog.description = blog.description;
-        findBlog.websiteUrl = blog.websiteUrl;
+        const putBlog: BlogDbPutType = {
+            name: blog.name,
+            description: blog.description,
+            websiteUrl: blog.websiteUrl
+        };
+        await repBD.edit(entKey, putBlog, +id);
     }, // Изменение сетевого журнала в БД
     async maper(blog: BlogDbType): Promise<BlogViewModel> {
         const blogForOutput: BlogViewModel = {

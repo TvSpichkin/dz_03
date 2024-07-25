@@ -1,5 +1,5 @@
 import express, {Response} from "express";
-import {setDB} from "../../db/db";
+import {setDB} from "../../db/repDB";
 
 
 export const testRout = express.Router(); // Объявление маршрутизатора тестирования

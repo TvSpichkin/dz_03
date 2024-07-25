@@ -10,6 +10,6 @@ export const SET = {
         POSTS: "/posts",
         TESTING: "/testing",
     }, // Пути ресурсов
-    ADMIN: process.env.ADMIN || "admin:qwerty",
-    MongoURI: process.env.MongoURI || "mongodb://127.0.0.1:27017"
+    ADMIN: process.env.ADMIN || "admin:qwerty", // Логин и пароль для авторизации
+    MongoURI: process.env.MongoURI || "mongodb://127.0.0.1:27017" // ЕИР строка подключения к монгоБД
 }; // Определение частоиспользуемых констант
