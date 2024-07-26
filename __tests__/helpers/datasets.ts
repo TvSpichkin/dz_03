@@ -6,7 +6,7 @@ import {PostInputModel} from "../../src/IOtypes/postsTypes";
 
 export const auth = {"Authorization": "Basic " + fromUTF8ToBase64(SET.ADMIN)}; // Получение base64 строки авторизации
 
-export const corrBlog1 = createBlog("Василий", "Тёркин", "https://_vas-i1.ter/k_/-i/4/"),
+export const corrBlog1 = createBlog("Василий", "Тёркин", "https://_vas-i1.t_9r/k_/-i/4/"),
     corrBlog2 = createBlog("Максим", "Так так так", "https://maksima.dva/teski"),
     corrBlog3 = createBlog(bigStr(15), bigStr(500), "https://te.st"), // Правильные входные сетевые журналы
     corrPost1 = createPost("Название 1 записи", "Краткое описание 1 записи", "Содержание 1 записи", "1"),
