@@ -1,5 +1,5 @@
-import {DBmem} from "./DBmem";
-import {DBType, KeysDB, ValsDB, EntDbType, DbTypeFind, keyIds, EntPutType} from "./typesRepDB";
+import {DBmem} from "../DBmem";
+import {DBType, KeysDB, ValsDB, EntDbType, DbTypeFind, keyIds, EntPutType} from "../types/typesRepDB";
 
 
 export const repBDmem = {

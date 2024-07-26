@@ -1,4 +1,4 @@
-import {DBType} from "./typesRepDB";
+import {DBType} from "./types/typesRepDB";
 
 
 export const DBmem: DBType = {

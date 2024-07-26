@@ -1,5 +1,5 @@
 import {req, getBlog} from "./helpers/test-helpers";
-import {setDB} from "../src/db/repDB";
+import {setDB} from "../src/db/repository/repDB";
 import {SET} from "../src/settings";
 import {auth, bigStr, corrBlog1, corrBlog2, corrBlog3} from "./helpers/datasets";
 import {BlogViewModel} from "../src/IOtypes/blogsTypes";

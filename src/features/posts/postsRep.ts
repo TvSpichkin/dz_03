@@ -1,5 +1,5 @@
-import {PostDbPutType, PostDbType} from "../../db/postsDbTypes";
-import {repBD} from "../../db/repDB";
+import {PostDbPutType, PostDbType} from "../../db/types/postsDbTypes";
+import {repBD} from "../../db/repository/repDB";
 import {PostInputModel, PostViewModel} from "../../IOtypes/postsTypes";
 
 const entKey = "posts";

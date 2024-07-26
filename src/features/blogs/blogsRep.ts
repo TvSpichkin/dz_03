@@ -1,5 +1,5 @@
-import {BlogDbType, BlogDbPutType} from "../../db/blogsDbTypes";
-import {repBD} from "../../db/repDB";
+import {BlogDbType, BlogDbPutType} from "../../db/types/blogsDbTypes";
+import {repBD} from "../../db/repository/repDB";
 import {BlogInputModel, BlogViewModel} from "../../IOtypes/blogsTypes";
 
 

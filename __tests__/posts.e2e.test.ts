@@ -1,5 +1,5 @@
 import {req, getPost} from "./helpers/test-helpers";
-import {setDB} from "../src/db/repDB";
+import {setDB} from "../src/db/repository/repDB";
 import {SET} from "../src/settings";
 import {auth, bigStr, corrPost1, corrPost2, corrPost3, corrBlog1, corrBlog2} from "./helpers/datasets";
 import {PostViewModel} from "../src/IOtypes/postsTypes";

@@ -1,8 +1,8 @@
-import {ValueOf} from "../methodsForTS";
+import {ValueOf} from "../../methodsForTS";
 import {BlogDbPutType, BlogDbType} from "./blogsDbTypes";
 import {PostDbPutType, PostDbType} from "./postsDbTypes";
-import {BlogInputModel} from "../IOtypes/blogsTypes";
-import {PostInputModel} from "../IOtypes/postsTypes";
+import {BlogInputModel} from "../../IOtypes/blogsTypes";
+import {PostInputModel} from "../../IOtypes/postsTypes";
 
 
 export type DBType = {
