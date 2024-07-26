@@ -3,8 +3,8 @@ import {FLAG} from "../globalVars";
 import {SET} from "../settings";
 
 
-export const client = new MongoClient(SET.MongoURI), // Инициализация монгоБД
-    db = client.db("guilds"); // Обращение к БД гильдий
+const client = new MongoClient(SET.MongoURI); // Инициализация монгоБД
+export const db = client.db("guilds"); // Обращение к БД гильдий
 
 export async function runDB() {
     try {
