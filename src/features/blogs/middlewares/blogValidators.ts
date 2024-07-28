@@ -20,7 +20,10 @@ const nameValidator = body("name").isString().withMessage('Имя не явля�
 export async function findBlogValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
     const findBlog = await blogsRep.find(req.params.id); // Поиск сетевого журнала
     if(!findBlog) res.sendStatus(404); // Если не найдено, то возрат 404 статуса
-    else next(); // Передача управления дальше
+    else {
+        res.locals.findBlog = findBlog; // Сохранение найденного сетевого журнала
+        next(); // Передача управления дальше
+    }
 } // Проверка существования искомого сетевого журнала
 
 export const blogValidators = [

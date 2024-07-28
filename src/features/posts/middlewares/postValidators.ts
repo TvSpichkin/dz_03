@@ -24,7 +24,10 @@ const titleValidator = body("title").isString().withMessage('Название н
 export async function findPostValidator(req: Request<{id: string}>, res: Response, next: NextFunction) {
     const findPost = await postsRep.find(req.params.id); // Поиск записи
     if(!findPost) res.sendStatus(404); // Если не найдено, то возрат 404 статуса
-    else next(); // Передача управления дальше
+    else {
+        res.locals.findPost = findPost; // Сохранение найденной записи
+        next(); // Передача управления дальше
+    }
 } // Проверка существования искомой записи
 
 export const postValidators = [

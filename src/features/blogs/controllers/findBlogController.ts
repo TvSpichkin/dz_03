@@ -5,5 +5,5 @@ import {blogsRep} from "../blogsRep";
 
 
 export async function findBlogController(req: ReqParam<BlogIdModel>, res: Response<BlogViewModel>) {
-    res.json(await blogsRep.findAndMap(req.params.id)); // Получение искомого сетевого журнала
+    res.json(await blogsRep.maper(res.locals.findBlog)); // Получение искомого сетевого журнала
 }; // Контролёр, отвечающий за выдачу искомого сетевого журнала

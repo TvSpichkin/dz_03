@@ -5,5 +5,5 @@ import {postsRep} from "../postsRep";
 
 
 export async function findPostController(req: ReqParam<PostIdModel>, res: Response<PostViewModel>) {
-    res.json(await postsRep.findAndMap(req.params.id)); // Получение искомого записи
+    res.json(await postsRep.maper(res.locals.findPost)); // Получение искомого записи
 }; // Контролёр, отвечающий за выдачу искомого записи
