@@ -3,12 +3,14 @@ import {setDB} from "../src/db/repository/repDB";
 import {SET} from "../src/settings";
 import {auth, bigStr, corrPost1, corrPost2, corrPost3, corrBlog1, corrBlog2} from "./helpers/datasets";
 import {PostViewModel} from "../src/IOtypes/postsTypes";
+import {runDB} from "../src/db/db";
 
 
 describe("/posts", () => {
     var post1: PostViewModel, post2: PostViewModel, blogName1 = corrBlog1.name, blogName2 = corrBlog2.name;
     
     beforeAll(async () => {
+        await runDB(); // Подключение к БД
         await setDB(); // Очистка базы данных перед началом тестирования
         await req.post(SET.PATH.BLOGS).set(auth).send(corrBlog1).expect(201); // Добавление в БД 1 сетевого журнала
         await req.post(SET.PATH.BLOGS).set(auth).send(corrBlog2).expect(201); // Добавление в БД 2 сетевого журнала

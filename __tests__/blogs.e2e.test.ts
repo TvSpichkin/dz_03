@@ -3,12 +3,14 @@ import {setDB} from "../src/db/repository/repDB";
 import {SET} from "../src/settings";
 import {auth, bigStr, corrBlog1, corrBlog2, corrBlog3} from "./helpers/datasets";
 import {BlogViewModel} from "../src/IOtypes/blogsTypes";
+import {runDB} from "../src/db/db";
 
 
 describe("/blogs", () => {
     var blog1: BlogViewModel, blog2: BlogViewModel;
     
     beforeAll(async () => {
+        await runDB(); // Подключение к БД
         await setDB(); // Очистка базы данных перед началом тестирования
     });
     
