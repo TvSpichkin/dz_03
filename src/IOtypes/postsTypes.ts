@@ -16,5 +16,6 @@ export type PostViewModel = {
     shortDescription: string, // Краткое описание; максимальная длина: 100
     content: string, // Содержание; максимальная длина: 1000
     blogId: string, // Идентификатор существующего сетевого журнала
-    blogName: string // Имя соответствующего сетевого журнала
+    blogName: string, // Имя соответствующего сетевого журнала
+    createdAt: string // Строка даты создания
 }; // Выходная модель записи

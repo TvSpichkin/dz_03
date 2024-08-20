@@ -71,24 +71,26 @@ describe("/posts", () => {
 
     it("должен создать запись c правильными входными данными", async () => {
         post1 = (await req.post(SET.PATH.POSTS).set(auth).send(corrPost1).expect(201)).body;
-        expect(post1).toEqual({
-            id: "1",
-            title: corrPost1.title,
-            shortDescription: corrPost1.shortDescription,
-            content: corrPost1.content,
-            blogId: corrPost1.blogId,
-            blogName: blogName1
+        expect(corrPost1).toEqual({
+            title: post1.title,
+            shortDescription: post1.shortDescription,
+            content: post1.content,
+            blogId: post1.blogId
         });
+        expect(post1.id).toBe("1");
+        expect(post1.blogName).toBe(blogName1);
+        expect(new Date(post1.createdAt).getTime()).not.toBeNaN();
 
         post2 = (await req.post(SET.PATH.POSTS).set(auth).send(corrPost2).expect(201)).body;
-        expect(post2).toEqual({
-            id: "2",
-            title: corrPost2.title,
-            shortDescription: corrPost2.shortDescription,
-            content: corrPost2.content,
-            blogId: corrPost2.blogId,
-            blogName: blogName1
+        expect(corrPost2).toEqual({
+            title: post2.title,
+            shortDescription: post2.shortDescription,
+            content: post2.content,
+            blogId: post2.blogId
         });
+        expect(post2.id).toBe("2");
+        expect(post2.blogName).toBe(blogName1);
+        expect(new Date(post2.createdAt).getTime()).not.toBeNaN();
 
         await getPost.expect(200, [post1, post2]);
     });

@@ -70,20 +70,24 @@ describe("/blogs", () => {
 
     it("должен создать сетевой журнал c правильными входными данными", async () => {
         blog1 = (await req.post(SET.PATH.BLOGS).set(auth).send(corrBlog1).expect(201)).body;
-        expect(blog1).toEqual({
-            id: "1",
-            name: corrBlog1.name,
-            description: corrBlog1.description,
-            websiteUrl: corrBlog1.websiteUrl
+        expect(corrBlog1).toEqual({
+            name: blog1.name,
+            description: blog1.description,
+            websiteUrl: blog1.websiteUrl
         });
+        expect(blog1.id).toBe("1");
+        expect(new Date(blog1.createdAt).getTime()).not.toBeNaN();
+        expect(blog1.isMembership).toBe(false);
 
         blog2 = (await req.post(SET.PATH.BLOGS).set(auth).send(corrBlog2).expect(201)).body;
-        expect(blog2).toEqual({
-            id: "2",
-            name: corrBlog2.name,
-            description: corrBlog2.description,
-            websiteUrl: corrBlog2.websiteUrl
+        expect(corrBlog2).toEqual({
+            name: blog2.name,
+            description: blog2.description,
+            websiteUrl: blog2.websiteUrl
         });
+        expect(blog2.id).toBe("2");
+        expect(new Date(blog2.createdAt).getTime()).not.toBeNaN();
+        expect(blog2.isMembership).toBe(false);
 
         await getBlog.expect(200, [blog1, blog2]);
     });

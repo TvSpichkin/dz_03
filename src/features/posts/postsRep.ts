@@ -25,7 +25,8 @@ export const postsRep = {
             title: post.title,
             shortDescription: post.shortDescription,
             content: post.content,
-            blogId: +post.blogId
+            blogId: +post.blogId,
+            createdAt: new Date().toISOString()
         };
 
         newPost.id = await repBD.write(entKey, newPost);
@@ -52,7 +53,8 @@ export const postsRep = {
             content: post.content,
             blogId: String(post.blogId),
             // @ts-ignore: что-то с несоответствием типов
-            blogName: (await repBD.read("blogs", post.blogId))!.name //! Этот метод используется после проверки существования
+            blogName: (await repBD.read("blogs", post.blogId))!.name, //! Этот метод используется после проверки существования
+            createdAt: post.createdAt
         };
 
         return postForOutput;

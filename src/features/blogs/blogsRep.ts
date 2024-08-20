@@ -25,10 +25,12 @@ export const blogsRep = {
             id: 0,
             name: blog.name,
             description: blog.description,
-            websiteUrl: blog.websiteUrl
+            websiteUrl: blog.websiteUrl,
+            createdAt: new Date().toISOString(),
+            isMembership: false
         };
 
-        newBlog.id = await repBD.write(entKey, newBlog);
+        newBlog.id = (await repBD.write(entKey, newBlog));
 
         return this.maper(newBlog);
     }, // Запись сетевого журнала в БД
@@ -49,7 +51,9 @@ export const blogsRep = {
             id: String(blog.id),
             name: blog.name,
             description: blog.description,
-            websiteUrl: blog.websiteUrl
+            websiteUrl: blog.websiteUrl,
+            createdAt: blog.createdAt,
+            isMembership: blog.isMembership
         };
 
         return blogForOutput;
