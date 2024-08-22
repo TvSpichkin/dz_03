@@ -8,7 +8,7 @@ export const SET = {
     PATH: {
         BLOGS: "/blogs",
         POSTS: "/posts",
-        TESTING: "/testing",
+        TESTING: "/testing"
     }, // Пути ресурсов
     ADMIN: process.env.ADMIN || "admin:qwerty", // Логин и пароль для авторизации
     MongoURI: process.env.MongoURI || "mongodb://127.0.0.1:27017" // ЕИР строка подключения к монгоБД
