@@ -8,4 +8,4 @@ export async function createPostController(req: ReqBody<PostInputModel>, res: Re
     const newPost = await postsRep.create(req.body); // Создание записи
 
     res.status(201).json(newPost); // Возврат созданной записи
-}; // Контролёр, отвечающий за создание и возврат записи
+} // Контролёр, отвечающий за создание и возврат записи

@@ -5,4 +5,4 @@ import {postsRep} from "../postsRep";
 
 export async function getPostsController(req: Request, res: Response<PostViewModel[]>) {
     res.json(await postsRep.getAll()); // Получение записей
-}; // Контролёр, отвечающий за выдачу записей
+} // Контролёр, отвечающий за выдачу записей

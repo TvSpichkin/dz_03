@@ -7,4 +7,4 @@ import {postsRep} from "../postsRep";
 export async function putPostController(req: ReqParamBody<PostIdModel, PostInputModel>, res: Response) {
     await postsRep.put(req.body, req.params.id); // Изменение выбранной записи
     res.sendStatus(204); // Отправка успешного состояния «нет содержимого»
-}; // Контролёр, отвечающий за изменение выбранной записи
+} // Контролёр, отвечающий за изменение выбранной записи
