@@ -7,4 +7,4 @@ import {blogsRep} from "../blogsRep";
 export async function putBlogController(req: ReqParamBody<BlogIdModel, BlogInputModel>, res: Response) {
     await blogsRep.put(req.body, req.params.id); // Изменение выбранного сетевого журнала
     res.sendStatus(204); // Отправка успешного состояния «нет содержимого»
-}; // Контролёр, отвечающий за изменение выбранного сетевого журнала
+} // Контролёр, отвечающий за изменение выбранного сетевого журнала

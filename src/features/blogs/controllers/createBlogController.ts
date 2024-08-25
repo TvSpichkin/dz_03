@@ -8,4 +8,4 @@ export async function createBlogController(req: ReqBody<BlogInputModel>, res: Re
     const newBlog = await blogsRep.create(req.body); // Создание сетевого журнала
 
     res.status(201).json(newBlog); // Возврат созданного сетевого журнала
-}; // Контролёр, отвечающий за создание и возврат сетевого журнала
+} // Контролёр, отвечающий за создание и возврат сетевого журнала
