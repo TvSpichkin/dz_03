@@ -6,14 +6,12 @@ const entKey = "posts";
 
 export const postsRep = {
     async getAll(): Promise<PostViewModel[]> {
-        // @ts-ignore: что-то с несоответствием типов
-        const posts: PostDbType[] = await repBD.readAll(entKey);
+        const posts: PostDbType[] = await repBD.readAll(entKey) as PostDbType[];
 
         return Promise.all(posts.map(this.maper));
     }, // Извлечение всех записей
-    async find(id: string): Promise<PostDbType | undefined> {
-        // @ts-ignore: что-то с несоответствием типов
-        return repBD.read(entKey, +id);
+    async find(id: string): Promise<PostDbType | null> {
+        return repBD.read(entKey, +id) as Promise<PostDbType | null>;
     }, // Извлечение записи по идентификатору
     async findAndMap(id: string): Promise<PostViewModel> {
         const post = (await this.find(id))!; //! Этот метод используется после проверки существования

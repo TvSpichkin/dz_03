@@ -1,6 +1,5 @@
 import {db} from "../db";
 import {DBType, KeysDB, ValsDB, EntDbType, DbTypeFind, keyIds, EntPutType} from "../types/typesRepDB";
-import {repBDmem, setDBmem} from "./repDBmem";
 
 
 export const repBD = {
@@ -11,8 +10,7 @@ export const repBD = {
         return db.collection<EntDbType>(entKey).findOne({id: id});
     }, // Извлечение сущности по идентификатору
     async write(entKey: KeysDB, entity: EntDbType): Promise<number> {
-        // @ts-ignore: что-то с несоответствием типов
-        const endId = await db.collection<EntDbType>(entKey).find({}, {id: 1}).sort({$natural: -1}).limit(1).toArray();
+        const endId = await db.collection<EntDbType>(entKey).find({id: 1}).sort({$natural: -1}).limit(1).toArray();
         
         entity.id = endId.length ? endId[0].id + 1 : 1;
         await db.collection<EntDbType>(entKey).insertOne(entity);

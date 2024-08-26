@@ -7,14 +7,12 @@ const entKey = "blogs";
 
 export const blogsRep = {
     async getAll(): Promise<BlogViewModel[]> {
-        // @ts-ignore: что-то с несоответствием типов
-        const blogs: BlogDbType[] = await repBD.readAll(entKey);
+        const blogs: BlogDbType[] = await repBD.readAll(entKey) as BlogDbType[];
 
         return Promise.all(blogs.map(this.maper));
     }, // Извлечение всех сетевых журналов
-    async find(id: string): Promise<BlogDbType | undefined> {
-        // @ts-ignore: что-то с несоответствием типов
-        return repBD.read(entKey, +id);
+    async find(id: string): Promise<BlogDbType | null> {
+        return repBD.read(entKey, +id) as Promise<BlogDbType | null>;
     }, // Извлечение сетевого журнала по идентификатору
     async findAndMap(id: string): Promise<BlogViewModel> {
         const blog: BlogDbType = (await this.find(id))!; //! Этот метод используется после проверки существования
